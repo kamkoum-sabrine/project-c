@@ -1,6 +1,6 @@
 #ifndef BIB_H_INCLUDED
 #define BIB_H_INCLUDED
-
+#include "functions.c"
 typedef struct Location LOCATION;
 typedef struct Client CLIENT;
 typedef struct Voiture VOITURE;
