@@ -1,11 +1,10 @@
 # depslib dependency file v1.0
-1699302240 source:f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\main.c
+1699354265 source:f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\main.c
 	<stdio.h>
 	<stdlib.h>
 	"bib.h"
 
-1699302120 f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\bib.h
-	"functions.c"
+1699354037 f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\bib.h
 
 1699302442 f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\functions.c
 	<stdio.h>

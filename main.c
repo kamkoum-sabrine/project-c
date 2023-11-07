@@ -1,14 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bib.h"
-
-
-
 int main()
 {
 
     VOITURE v1;
     ajouterVoiture(&v1);
+    afficherVoiture(v1);
     /**VOITURE v1;
     printf("Donner le code de la voiture ");
     scanf("%d", &v1.code);
