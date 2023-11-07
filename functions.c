@@ -13,3 +13,4 @@ void ajouterVoiture(VOITURE *v) {
     printf("Donner le prix de location de la voiture ");
     scanf("%f", &v->prixLocation);
 }
+

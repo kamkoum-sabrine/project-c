@@ -25,7 +25,7 @@ struct Location {
 
 
 struct Client {
-    int code;
+    int cin;
     char nom[50];
     char prenom[50];
     char telephone[15];
