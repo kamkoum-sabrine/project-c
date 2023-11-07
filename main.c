@@ -3,20 +3,23 @@
 #include "bib.h"
 int main()
 {
+    int n,i;
+    VOITURE *stockvoiture;
 
     VOITURE v1;
-    ajouterVoiture(&v1);
-    afficherVoiture(v1);
-    /**VOITURE v1;
-    printf("Donner le code de la voiture ");
-    scanf("%d", &v1.code);
-    printf("Donner le modèle de la voiture ");
-    scanf("%s", &v1.modele);
-    printf("Donner la marque de la voiture ");
-    scanf("%s",  &v1.marque);
-    printf("Donner l'année de fabrication de la voiture ");
-    scanf("%d",  &v1.annee);
-    printf("Donner le prix de location de la voiture ");
-    scanf("%f", &v1.prixLocation);**/
+    CLIENT c1;
+  ///  ajouterVoiture(&v1);
+   /// afficherVoiture(v1);
+    printf("Salut ! Combien de voiture voulez vous ajouter ? ");
+    scanf("%d",&n);
+   /** stockvoiture=(VOITURE*)malloc(n*sizeof(VOITURE));
+    for(i=0;i<n;i++)
+        ajouterVoiture(&stockvoiture+i);
+
+     for(i=0;i<n;i++)
+        afficherVoiture(*(stockvoiture+i));
+*/
+    ajouterClient(&c1);
+    afficherClient(c1);
     return 0;
 }

@@ -28,7 +28,7 @@ struct Client {
     int cin;
     char nom[50];
     char prenom[50];
-    char telephone[15];
+    int telephone[15];
     LOCATION * locations[100];
     int nombreLocations;
 };
@@ -44,6 +44,7 @@ void miseAJour (VOITURE *,int, int , VOITURE); /**Une procédure qui mis à jour u
                                              le nombre des voitures dans le tableau et l'indice de voiture à mettre à jour
                                              et la nouvelle voiture éditée**/
 void ajouterClient (CLIENT *); ///Une procédure qui crée un nouveau client
+void afficherClient (CLIENT); ///Une procédure qui affiche les informations d'une voiture
 
 
 
