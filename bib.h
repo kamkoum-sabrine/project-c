@@ -1,6 +1,6 @@
 #ifndef BIB_H_INCLUDED
 #define BIB_H_INCLUDED
-///#include "functions.c"
+
 typedef struct Location LOCATION;
 typedef struct Client CLIENT;
 typedef struct Voiture VOITURE;
@@ -16,7 +16,7 @@ struct Voiture {
 
 
 struct Location {
-    int code;
+    ///int code;
     VOITURE * voitureLouee;
     CLIENT * client;
     char dateDebut[20];
@@ -45,6 +45,11 @@ void miseAJour (VOITURE *,int, int , VOITURE); /**Une procédure qui mis à jour u
                                              et la nouvelle voiture éditée**/
 void ajouterClient (CLIENT *); ///Une procédure qui crée un nouveau client
 void afficherClient (CLIENT); ///Une procédure qui affiche les informations d'une voiture
+void affecterClientToVoiture(CLIENT *, VOITURE);
+VOITURE rechercherVoitureParCode(int, VOITURE [], int);
+void remplirTabVoiture(VOITURE * , int nbVoitures);
+void afficherTabVoiture(VOITURE* , int nbVoitures);
+void remplirTabClient(CLIENT * , int nbClient);
 
 
 
