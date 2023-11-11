@@ -1,16 +1,16 @@
 # depslib dependency file v1.0
-1699480374 source:f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\main.c
+1699716494 source:f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\main.c
 	<stdio.h>
 	<stdlib.h>
 	"bib.h"
 
-1699480489 f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\bib.h
+1699713277 f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\bib.h
 
 1699302442 f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\functions.c
 	<stdio.h>
 	"bib.h"
 
-1699480022 source:f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\functions.c
+1699716891 source:f:\1ere ingénieur informatique\programmation c\nouveau dossier\project\functions.c
 	<stdio.h>
 	"bib.h"
 
