@@ -34,42 +34,36 @@ void ajouterClient (CLIENT * c){
     printf("Saisir le telephone du client ");
     scanf("%d", &c->telephone);
     c->nombreLocations=0;
-   /// c->locations[c->nombreLocations] = malloc(sizeof(LOCATION));
 }
 
 void affecterClientToVoiture(CLIENT * c,VOITURE v){
-    c->locations[c->nombreLocations] = (LOCATION*) malloc(sizeof(LOCATION));
-   *(c->locations[c->nombreLocations]->voitureLouee)=v;
-    printf("Voiture à louer à %s %s\n",c->nom,c->prenom);
-    afficherVoiture(*(c->locations[c->nombreLocations]->voitureLouee));
-    printf("Donner la date debut de location de la voiture pour le client: %s %s ",c->nom, c->prenom);
+    LOCATION nouvelleLocation;
+    nouvelleLocation.voitureLouee = &v;
     printf("\nJour: ");
-    scanf("%d",&c->locations[c->nombreLocations]->dateDebut.jour);
+    scanf("%d",&nouvelleLocation.dateDebut.jour);
     printf("\nMois: ");
-    scanf("%d",&c->locations[c->nombreLocations]->dateDebut.mois);
+    scanf("%d",&nouvelleLocation.dateDebut.mois);
     printf("\nAnnée: ");
-    scanf("%d",&c->locations[c->nombreLocations]->dateDebut.annee);
+    scanf("%d",&nouvelleLocation.dateDebut.annee);
     printf("Donner la date fin de location de la voiture ");
     printf("\nJour: ");
-    scanf("%d",&c->locations[c->nombreLocations]->dateFin.jour);
+    scanf("%d",&nouvelleLocation.dateFin.jour);
     printf("\nMois: ");
-    scanf("%d",&c->locations[c->nombreLocations]->dateFin.mois);
+    scanf("%d",&nouvelleLocation.dateFin.mois);
     printf("\nAnnée: ");
-    scanf("%d",&c->locations[c->nombreLocations]->dateFin.annee);
-
-    ///scanf("%d",&c->locations[c->nombreLocations]->dateFin);
+    scanf("%d",&nouvelleLocation.dateFin.annee);
+    c->locations[c->nombreLocations] = &nouvelleLocation;
     c->nombreLocations++;
 }
 
 VOITURE rechercherVoitureParCode(int code, VOITURE v[], int nbVoiture){
     int trouve =0;
-    ///VOITURE temp;
-    ///temp.code=0;
+
     int i=0;
     while ((i<nbVoiture)&&(trouve==0)){
         if (v[i].code==code){
             trouve=1;
-            return *v;;
+            return v[i];
         }
         i++;
     }
@@ -77,8 +71,6 @@ VOITURE rechercherVoitureParCode(int code, VOITURE v[], int nbVoiture){
         VOITURE voitureParDefaut = { .code = 0 };
         return voitureParDefaut;
     }
- ///   return temp;
-
 }
 void remplirTabVoiture (VOITURE *v, int nbVoitures){
     ///VOITURE *stockvoiture;
@@ -94,22 +86,7 @@ void afficherTabVoiture(VOITURE * v, int nbVoitures){
 
 }
 
-/**void afficherClient(CLIENT  c){
-    int i;
-    printf("Le CIN du client: %d\n",c.cin);
-    printf("Le nom et prénom du client: %s %s\n",c.nom,c.prenom);
-    printf("Le telephone du client : %d\n",c.telephone);
-    printf("Les locations : \n");
-    for (i=0;i<c.nombreLocations;i++){
-        printf("Location num %d\n",i);
-        printf("La voiture :\n");
-        printf("La bbbbbbbbbbb :\n");
-       /// client->locations[i]->voitureLouee
-        afficherVoiture(*(c.locations[i]->voitureLouee));
-        printf("La date de début de location : %d/%d/%d\n",c.locations[i]->dateDebut.jour,c.locations[i]->dateDebut.mois,c.locations[i]->dateDebut.annee);
-        printf("La date de fin de location : %d/%d/%d\n",c.locations[i]->dateFin.jour,c.locations[i]->dateFin.mois,c.locations[i]->dateFin.annee);
-    }
-}**/
+
 
 
 void afficherClient(CLIENT  c) {
@@ -120,12 +97,12 @@ void afficherClient(CLIENT  c) {
     printf("Le telephone du client : %d\n", c.telephone);
     printf("Le nombre de ces locations: %d\n",c.nombreLocations);
 
-    /**for (i = 0; i < c.nombreLocations; i++) {
+    for (i = 0; i < c.nombreLocations; i++) {
         printf("Location num %d\n", i);
 
         printf("La voiture :\n");
-        printf("9adesh men location %d\n", c.nombreLocations);
-        afficherVoiture(*(c.locations[i]->voitureLouee));
+        ///printf("9adesh men location %d modele %s\n", c.nombreLocations,c.locations[i]->voitureLouee->modele);
+        ///afficherVoiture(*(c.locations[i]->voitureLouee));
         printf("La date de début de location : %d/%d/%d\n",
                c.locations[i]->dateDebut.jour,
                c.locations[i]->dateDebut.mois,
@@ -135,14 +112,30 @@ void afficherClient(CLIENT  c) {
                c.locations[i]->dateFin.jour,
                c.locations[i]->dateFin.mois,
                c.locations[i]->dateFin.annee);
-    }**/
+    }
+}
+/**void supprimerVoiture(VOITURE * voitures, int n, int CODE) {
+    int i,s,j ;
+    i=0;
+    s=1;
+
+    do
+    {
+        if (voitures[i].code==CODE)
+        {
+            for (j=i;j<n-1;j++)
+            {
+                voitures[j]=voitures[j+1];
+                s=0;
+            }
+        }
+        else
+        i++;
+    }
+    while((i<n)&&(s==1));
+    if (i==n)
+    printf("Erreur : Voiture introuvable \n ");
 }
 
 
-/**void afficherTabClients (CLIENT *c, int nbClients){
-    ///VOITURE *stockvoiture;
-    int i;
-    c=(CLIENT*)malloc(nbClients*sizeof(CLIENT));
-    for(i=0;i<nbClients;i++)
-        afficherClient(&c+i);
-}**/
+**/

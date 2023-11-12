@@ -21,9 +21,17 @@ void main()
         printf("\nVOITURE %d\n",i);
         afficherVoiture(*(stockvoiture+i));
      }
-
-
-
+    /** int codeSupp;
+     printf("*******Suppression d'une voiture***********\n")
+     printf("Donner le code de voiture à supprimer ");
+     scanf("%d",&codeSupp);
+     supprimerVoiture(stockvoiture,nbVoitures, codeSupp);
+    printf("Affichage après suppression \n");
+    for(i=0;i<nbVoitures;i++){
+        printf("\nVOITURE %d\n",i);
+        afficherVoiture(*(stockvoiture+i));
+     }
+    **/
     printf("Combien de client voulez vous ajouter ? \n");
     scanf("%d",&nbClients);
     clientsAgence=(CLIENT*)malloc(nbClients*sizeof(CLIENT));

@@ -44,9 +44,7 @@ struct Client {
 void ajouterVoiture (VOITURE *); ///Une procédure qui crée une nouvelle voiture
 void afficherVoiture (VOITURE); ///Une procédure qui affiche les informations d'une voiture
 
-void supprimerVoiture(VOITURE *, int *, int); /**Une procédure qui supprime une voiture d'un tableau de
-                                            voitures (Elle prend en paramètres le tableau des voitures,
-                                             le nombre des voitures dans le tableau et l'indice de voiture à supprimer**/
+
 void miseAJour (VOITURE *,int, int , VOITURE); /**Une procédure qui mis à jour une voiture d'un tableau de
                                             voitures (Elle prend en paramètres le tableau des voitures,
                                              le nombre des voitures dans le tableau et l'indice de voiture à mettre à jour
@@ -59,7 +57,7 @@ void remplirTabVoiture(VOITURE * , int nbVoitures);
 void afficherTabVoiture(VOITURE* , int nbVoitures);
 void remplirTabClient(CLIENT * , int nbClients);
 void afficherTabClients(CLIENT *, int);
-
+///void supprimerVoiture(VOITURE *, int , int )
 
 
 
