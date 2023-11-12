@@ -38,21 +38,28 @@ void ajouterClient (CLIENT * c){
 
 void affecterClientToVoiture(CLIENT * c,VOITURE v){
     LOCATION nouvelleLocation;
+    DATE dateDeb;
+    DATE dateFin;
     nouvelleLocation.voitureLouee = &v;
     printf("\nJour: ");
-    scanf("%d",&nouvelleLocation.dateDebut.jour);
+    scanf("%d",&dateDeb.jour);
     printf("\nMois: ");
-    scanf("%d",&nouvelleLocation.dateDebut.mois);
+    scanf("%d",&dateDeb.mois);
     printf("\nAnnée: ");
-    scanf("%d",&nouvelleLocation.dateDebut.annee);
+    scanf("%d",&dateDeb.annee);
     printf("Donner la date fin de location de la voiture ");
     printf("\nJour: ");
-    scanf("%d",&nouvelleLocation.dateFin.jour);
+    scanf("%d",&dateFin.jour);
     printf("\nMois: ");
-    scanf("%d",&nouvelleLocation.dateFin.mois);
+    scanf("%d",&dateFin.mois);
     printf("\nAnnée: ");
-    scanf("%d",&nouvelleLocation.dateFin.annee);
+    scanf("%d",&dateFin.annee);
+    nouvelleLocation.dateDebut = dateDeb;
+    nouvelleLocation.dateFin = dateFin;
+    printf("DateLocation fin = %d-%d-%d\n",nouvelleLocation.dateFin.jour,nouvelleLocation.dateFin.mois, nouvelleLocation.dateFin.annee );
     c->locations[c->nombreLocations] = &nouvelleLocation;
+    printf("DateLocation fin = %d-%d-%d\n",c->locations[c->nombreLocations]->dateFin.jour,c->locations[c->nombreLocations]->dateFin.mois, c->locations[c->nombreLocations]->dateFin.annee );
+
     c->nombreLocations++;
 }
 
@@ -102,7 +109,8 @@ void afficherClient(CLIENT  c) {
 
         printf("La voiture :\n");
         ///printf("9adesh men location %d modele %s\n", c.nombreLocations,c.locations[i]->voitureLouee->modele);
-        ///afficherVoiture(*(c.locations[i]->voitureLouee));
+        afficherVoiture(*(c.locations[i]->voitureLouee));
+
         printf("La date de début de location : %d/%d/%d\n",
                c.locations[i]->dateDebut.jour,
                c.locations[i]->dateDebut.mois,
@@ -110,6 +118,7 @@ void afficherClient(CLIENT  c) {
 
         printf("La date de fin de location : %d/%d/%d\n",
                c.locations[i]->dateFin.jour,
+              /// c.locations[i]->dateFin.jour,
                c.locations[i]->dateFin.mois,
                c.locations[i]->dateFin.annee);
     }

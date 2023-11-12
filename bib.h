@@ -36,7 +36,7 @@ struct Client {
     int cin;
     char nom[50];
     char prenom[50];
-    int telephone[15];
+    int telephone;
     LOCATION * locations[100];
     int nombreLocations;
 };
