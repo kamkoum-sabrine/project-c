@@ -59,7 +59,6 @@ void affecterClientToVoiture(CLIENT * c,VOITURE v){
     printf("DateLocation fin = %d-%d-%d\n",nouvelleLocation.dateFin.jour,nouvelleLocation.dateFin.mois, nouvelleLocation.dateFin.annee );
     c->locations[c->nombreLocations] = &nouvelleLocation;
     printf("DateLocation fin = %d-%d-%d\n",c->locations[c->nombreLocations]->dateFin.jour,c->locations[c->nombreLocations]->dateFin.mois, c->locations[c->nombreLocations]->dateFin.annee );
-
     c->nombreLocations++;
 }
 
@@ -123,6 +122,44 @@ void afficherClient(CLIENT  c) {
                c.locations[i]->dateFin.annee);
     }
 }
+void miseAJour(VOITURE *tabVoitures, int nbVoitures, int codeVoiture, VOITURE nouvelleVoiture) {
+    int i;
+    for (i = 0; i < nbVoitures; ++i) {
+        if (tabVoitures[i].code == codeVoiture) {
+            // Mise à jour des champs de la voiture
+            tabVoitures[i] = nouvelleVoiture;
+            printf("La mise à jour de la voiture avec le code %d a été effectuée avec succès.\n", codeVoiture);
+            return;  // Sortie de la boucle après la mise à jour
+        }
+    }
+    printf("Aucune voiture avec le code %d n'a été trouvée. La mise à jour a échoué.\n", codeVoiture);
+}
+void supprimerVoiture(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
+    int i,j;
+    int voitureTrouvee = 0;  // Variable pour indiquer si la voiture a été trouvée
+
+    for (i = 0; i < nbVoitures; ++i) {
+        if (tabVoitures[i].code == codeVoiture) {
+            // Voiture trouvée, déplacement des voitures à partir de l'indice jusqu'à la fin du tableau vers la gauche
+            for ( j = i; j < (nbVoitures - 1); j++) {
+                tabVoitures[j] = tabVoitures[j + 1];
+            }
+
+            // Diminution du nombre de voitures dans le tableau
+            nbVoitures--;
+
+            printf("La voiture avec le code %d a été supprimée avec succès.\n", codeVoiture);
+            voitureTrouvee = 1;
+            break;  // Sortie de la boucle après la suppression
+        }
+    }
+
+    if (!voitureTrouvee) {
+        printf("Aucune voiture avec le code %d n'a été trouvée. La suppression a échoué.\n", codeVoiture);
+    }
+}
+
+
 /**void supprimerVoiture(VOITURE * voitures, int n, int CODE) {
     int i,s,j ;
     i=0;

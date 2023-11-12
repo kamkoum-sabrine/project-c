@@ -45,10 +45,7 @@ void ajouterVoiture (VOITURE *); ///Une procédure qui crée une nouvelle voiture
 void afficherVoiture (VOITURE); ///Une procédure qui affiche les informations d'une voiture
 
 
-void miseAJour (VOITURE *,int, int , VOITURE); /**Une procédure qui mis à jour une voiture d'un tableau de
-                                            voitures (Elle prend en paramètres le tableau des voitures,
-                                             le nombre des voitures dans le tableau et l'indice de voiture à mettre à jour
-                                             et la nouvelle voiture éditée**/
+
 void ajouterClient (CLIENT *); ///Une procédure qui crée un nouveau client
 void afficherClient (CLIENT ); ///Une procédure qui affiche les informations d'une voiture
 void affecterClientToVoiture(CLIENT *, VOITURE);
@@ -57,6 +54,8 @@ void remplirTabVoiture(VOITURE * , int nbVoitures);
 void afficherTabVoiture(VOITURE* , int nbVoitures);
 void remplirTabClient(CLIENT * , int nbClients);
 void afficherTabClients(CLIENT *, int);
+void miseAJour (VOITURE *,int, int , VOITURE);
+void supprimerVoiture(VOITURE *, int , int);
 ///void supprimerVoiture(VOITURE *, int , int )
 
 
