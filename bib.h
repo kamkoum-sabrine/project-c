@@ -43,20 +43,12 @@ struct Client {
 
 void ajouterVoiture (VOITURE *); ///Une procédure qui crée une nouvelle voiture
 void afficherVoiture (VOITURE); ///Une procédure qui affiche les informations d'une voiture
-
-
-
 void ajouterClient (CLIENT *); ///Une procédure qui crée un nouveau client
 void afficherClient (CLIENT ); ///Une procédure qui affiche les informations d'une voiture
 void affecterClientToVoiture(CLIENT *, VOITURE);
 VOITURE rechercherVoitureParCode(int, VOITURE [], int);
-void remplirTabVoiture(VOITURE * , int nbVoitures);
-void afficherTabVoiture(VOITURE* , int nbVoitures);
-void remplirTabClient(CLIENT * , int nbClients);
-void afficherTabClients(CLIENT *, int);
 void miseAJour (VOITURE *,int, int , VOITURE);
-void supprimerVoiture(VOITURE *, int , int);
-///void supprimerVoiture(VOITURE *, int , int )
+void supprimerVoiture(VOITURE *, int  , int);
 
 
 

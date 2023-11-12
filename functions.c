@@ -56,7 +56,7 @@ void affecterClientToVoiture(CLIENT * c,VOITURE v){
     scanf("%d",&dateFin.annee);
     nouvelleLocation.dateDebut = dateDeb;
     nouvelleLocation.dateFin = dateFin;
-    printf("DateLocation fin = %d-%d-%d\n",nouvelleLocation.dateFin.jour,nouvelleLocation.dateFin.mois, nouvelleLocation.dateFin.annee );
+    printf("DateLocation debut = %d-%d-%d\n",nouvelleLocation.dateDebut.jour,nouvelleLocation.dateDebut.mois, nouvelleLocation.dateDebut.annee );
     c->locations[c->nombreLocations] = &nouvelleLocation;
     printf("DateLocation fin = %d-%d-%d\n",c->locations[c->nombreLocations]->dateFin.jour,c->locations[c->nombreLocations]->dateFin.mois, c->locations[c->nombreLocations]->dateFin.annee );
     c->nombreLocations++;
@@ -79,7 +79,6 @@ VOITURE rechercherVoitureParCode(int code, VOITURE v[], int nbVoiture){
     }
 }
 void remplirTabVoiture (VOITURE *v, int nbVoitures){
-    ///VOITURE *stockvoiture;
     int i;
     v=(VOITURE*)malloc(nbVoitures*sizeof(VOITURE));
     for(i=0;i<nbVoitures;i++)
@@ -92,9 +91,6 @@ void afficherTabVoiture(VOITURE * v, int nbVoitures){
 
 }
 
-
-
-
 void afficherClient(CLIENT  c) {
     int i;
 
@@ -102,55 +98,45 @@ void afficherClient(CLIENT  c) {
     printf("Le nom et prénom du client: %s %s\n", c.nom, c.prenom);
     printf("Le telephone du client : %d\n", c.telephone);
     printf("Le nombre de ces locations: %d\n",c.nombreLocations);
-
-    for (i = 0; i < c.nombreLocations; i++) {
+    VOITURE voiture;
+   /** for (i = 0; i < c.nombreLocations; i++) {
         printf("Location num %d\n", i);
+        voiture = *(c.locations[i]->voitureLouee);
+        printf("Informations sur la voiture louée par le client :\n");
+        printf("Code : %d\n", voiture.code);
+        printf("Modèle : %s\n", voiture.modele);
+        printf("Marque : %s\n", voiture.marque);
+        printf("Année : %d\n", voiture.annee);
+        printf("Prix de location : %.2f\n", voiture.prixLocation);
+        printf("La voiture :");
+        printf("%d\n",c.locations[i]->voitureLouee->code);
 
-        printf("La voiture :\n");
-        ///printf("9adesh men location %d modele %s\n", c.nombreLocations,c.locations[i]->voitureLouee->modele);
-        afficherVoiture(*(c.locations[i]->voitureLouee));
-
-        printf("La date de début de location : %d/%d/%d\n",
-               c.locations[i]->dateDebut.jour,
-               c.locations[i]->dateDebut.mois,
-               c.locations[i]->dateDebut.annee);
-
-        printf("La date de fin de location : %d/%d/%d\n",
-               c.locations[i]->dateFin.jour,
-              /// c.locations[i]->dateFin.jour,
-               c.locations[i]->dateFin.mois,
-               c.locations[i]->dateFin.annee);
-    }
+    }**/
 }
 void miseAJour(VOITURE *tabVoitures, int nbVoitures, int codeVoiture, VOITURE nouvelleVoiture) {
     int i;
     for (i = 0; i < nbVoitures; ++i) {
         if (tabVoitures[i].code == codeVoiture) {
-            // Mise à jour des champs de la voiture
             tabVoitures[i] = nouvelleVoiture;
             printf("La mise à jour de la voiture avec le code %d a été effectuée avec succès.\n", codeVoiture);
-            return;  // Sortie de la boucle après la mise à jour
+            return;
         }
     }
     printf("Aucune voiture avec le code %d n'a été trouvée. La mise à jour a échoué.\n", codeVoiture);
 }
 void supprimerVoiture(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
     int i,j;
-    int voitureTrouvee = 0;  // Variable pour indiquer si la voiture a été trouvée
+    int voitureTrouvee = 0;
 
     for (i = 0; i < nbVoitures; ++i) {
         if (tabVoitures[i].code == codeVoiture) {
-            // Voiture trouvée, déplacement des voitures à partir de l'indice jusqu'à la fin du tableau vers la gauche
-            for ( j = i; j < (nbVoitures - 1); j++) {
+             for ( j = i; j < (nbVoitures - 1); j++) {
                 tabVoitures[j] = tabVoitures[j + 1];
             }
 
-            // Diminution du nombre de voitures dans le tableau
-            nbVoitures--;
-
             printf("La voiture avec le code %d a été supprimée avec succès.\n", codeVoiture);
             voitureTrouvee = 1;
-            break;  // Sortie de la boucle après la suppression
+            break;
         }
     }
 
@@ -158,30 +144,3 @@ void supprimerVoiture(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
         printf("Aucune voiture avec le code %d n'a été trouvée. La suppression a échoué.\n", codeVoiture);
     }
 }
-
-
-/**void supprimerVoiture(VOITURE * voitures, int n, int CODE) {
-    int i,s,j ;
-    i=0;
-    s=1;
-
-    do
-    {
-        if (voitures[i].code==CODE)
-        {
-            for (j=i;j<n-1;j++)
-            {
-                voitures[j]=voitures[j+1];
-                s=0;
-            }
-        }
-        else
-        i++;
-    }
-    while((i<n)&&(s==1));
-    if (i==n)
-    printf("Erreur : Voiture introuvable \n ");
-}
-
-
-**/
