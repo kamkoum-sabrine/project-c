@@ -21,13 +21,14 @@ void main()
       int option;
     do {
 
-        printf("*********Menu*********\n");
+        printf("\n\n*********Menu*********\n");
         printf("1-Ajouter des clients\n");
         printf("2-Affichage des voitures disponibles\n");
         printf("3-Affichage des clients \n");
-        printf("4-Supprimer une voiture\n");
-        printf("5-Mettre à une voiture\n");
-        printf("6-Quitter\n");
+        printf("4-Ajouter des voitures\n");
+        printf("5-Supprimer une voiture\n");
+        printf("6-Mettre à une voiture\n");
+        printf("7-Quitter\n");
         printf("Choisissez une option ");
         scanf("%d",&option);
         int codeVoiture,choix2;
@@ -71,13 +72,31 @@ void main()
             afficherClient(*(clientsAgence+i));
         } break;
         case 4:
+            // Utilisation de realloc pour redimensionner stockvoiture
+            printf("\nCombien de voitures supplémentaires voulez-vous ajouter ? ");
+            int newCars;
+            scanf("%d", &newCars);
+
+            stockvoiture = (VOITURE *)realloc(stockvoiture, (nbVoitures + newCars) * sizeof(VOITURE));
+            if (stockvoiture == NULL) {
+                printf("Erreur lors du redimensionnement du tableau stockvoiture\n");
+            } else {
+                nbVoitures += newCars;
+                for (i = nbVoitures - newCars; i < nbVoitures; i++) {
+                    printf("\nVOITURE %d\n", i);
+                    ajouterVoiture(stockvoiture + i);
+                }
+            }
+
+         break;
+          case 5:
            printf("Veuillez entrer le code de la voiture à supprimer : ");
             scanf("%d", &codeVoiture);
             supprimerVoiture(stockvoiture, nbVoitures, codeVoiture);
             nbVoitures--;
 
          break;
-        case 5:
+        case 6:
             printf("Veuillez entrer le code de la voiture à mettre à jour : ");
             scanf("%d", &(codeVoiture));
             printf("Veuillez entrer les nouvelles informations de la voiture :\n");
@@ -99,7 +118,7 @@ void main()
           break;
         default: printf("Choix invalid \n");
         }
-    } while (option!=6);
+    } while (option!=7);
 
 
     printf("\nFIN\n");
