@@ -81,18 +81,18 @@ VOITURE rechercherVoitureParCode(int code, VOITURE v[], int nbVoiture){
         return voitureParDefaut;
     }
 }
-void remplirTabVoiture (VOITURE *v, int nbVoitures){
+/**void remplirTabVoiture (VOITURE *v, int nbVoitures){
     int i;
     v=(VOITURE*)malloc(nbVoitures*sizeof(VOITURE));
     for(i=0;i<nbVoitures;i++)
         ajouterVoiture(&v+i);
-}
-void afficherTabVoiture(VOITURE * v, int nbVoitures){
+}**/
+/**void afficherTabVoiture(VOITURE * v, int nbVoitures){
     int i;
      for(i=0;i<nbVoitures;i++)
         afficherVoiture(v[i]);
 
-}
+}**/
 
 void afficherClient(CLIENT  c) {
     int i;
@@ -102,7 +102,7 @@ void afficherClient(CLIENT  c) {
     printf("Le telephone du client : %d\n", c.telephone);
     printf("Le nombre de ces locations: %d\n",c.nombreLocations);
     VOITURE voiture;
-   for (i = 0; i < c.nombreLocations; i++) {
+   /**for (i = 0; i < c.nombreLocations; i++) {
         printf("Location num %d\n", i);
         voiture = *(c.locations[i]->voitureLouee);
         printf("Informations sur la voiture louée par le client :\n");
@@ -114,10 +114,28 @@ void afficherClient(CLIENT  c) {
         printf("La voiture :");
         printf("%d\n",c.locations[i]->voitureLouee->code);
 
-    }
+    }**/
 }
-void miseAJour(VOITURE *tabVoitures, int nbVoitures, int codeVoiture, VOITURE nouvelleVoiture) {
+void miseAJour(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
     int i;
+    VOITURE nouvelleVoiture;
+    printf("Veuillez entrer le code de la voiture à mettre à jour : ");
+    scanf("%d", &(codeVoiture));
+    printf("Veuillez entrer les nouvelles informations de la voiture :\n");
+    printf("Saisissez le nouveau code de la voiture : ");
+    scanf("%d", &nouvelleVoiture.code);
+
+    printf("Saisissez le modèle de la nouvelle voiture : ");
+    scanf(" %s", &nouvelleVoiture.modele);
+
+    printf("Saisissez la marque de la nouvelle voiture : ");
+    scanf(" %s", &nouvelleVoiture.marque);
+
+    printf("Saisissez l'année de fabrication de la nouvelle voiture : ");
+    scanf("%d", &nouvelleVoiture.annee);
+
+    printf("Saisissez le prix de location de la nouvelle voiture : ");
+    scanf("%f", &nouvelleVoiture.prixLocation);
     for (i = 0; i < nbVoitures; ++i) {
         if (tabVoitures[i].code == codeVoiture) {
             tabVoitures[i] = nouvelleVoiture;
@@ -208,4 +226,141 @@ void modifierStructure(const char* nomFichierStructure, int position, VOITURE no
     }
 }
 
+void affichetabclient(CLIENT*c,int nbclients){
+    int i;
+    for(i=0;i<nbclients;i++){
+        printf("\n CLIENT %d",i);
+        afficherClient(c[i]);
+    }
+}
 
+CLIENT* allocationclient(int nbclients){
+    CLIENT* tableau;
+    tableau=(CLIENT*)malloc(nbclients*sizeof(CLIENT));
+    if (!tableau) exit(-1);
+    return tableau;
+}
+
+VOITURE* allocationvoiture(int nbvoitures ){
+    VOITURE* tab;
+    tab=(VOITURE*)malloc(nbvoitures*sizeof(VOITURE));
+    if (!tab)exit(-1);
+
+    return tab;
+}
+
+void afficherTabVoiture(VOITURE * v, int nbVoitures){
+    int i;
+     for(i=0;i<nbVoitures;i++){
+        printf("\nVOITURE %d\n",i);
+        ///afficherVoiture(*(stockvoiture+i));
+        printf("Contenu du fichier structure :\n");
+        afficherFichierStructure("fichier_structure.dat");
+     }
+}
+
+void remplirTabVoiture (VOITURE *v, int nbVoitures){
+    int i;
+    for(i=0;i<nbVoitures;i++){
+        printf("\nVOITURE %d\n",i);
+        // Voiture à écrire dans les fichiers
+        ajouterVoiture(v);
+        ecrireFichierStructure("fichier_structure.dat", *v);
+        ecrireFichierIndex("fichier_index.dat", i); // Stocker la position de la voiture
+    }
+
+    /**v=(VOITURE*)malloc(nbVoitures*sizeof(VOITURE));**/
+     /**  for(i=0;i<nbVoitures;i++){
+           printf("\n VOITURE %d \n ",i);
+           ajouterVoiture(&v+i);
+       }**/
+}
+
+void reallocVoiture(VOITURE *v, int nbVoitures, int nbNouveauxVoitures){
+
+    v = (VOITURE *)realloc(v, (nbVoitures + nbNouveauxVoitures) * sizeof(VOITURE));
+    if (v == NULL) {
+        printf("Erreur lors du redimensionnement du tableau stockvoiture\n");
+    } else {
+        nbVoitures += nbNouveauxVoitures;
+        int i;
+        for (i = nbVoitures - nbNouveauxVoitures; i < nbVoitures; i++) {
+            printf("\nVOITURE %d\n", i);
+            ajouterVoiture(v + i);
+
+            ecrireFichierStructure("fichier_structure.dat", *(v + i));
+            ecrireFichierIndex("fichier_index.dat", i); // Stocker la position de la voiture
+        }
+    }
+}
+
+void remplirTabClient(CLIENT * c, int nbClients, VOITURE *v, int nbVoitures){
+            int i;
+            int code;
+            VOITURE Vloue;
+             for(i=0;i<nbClients;i++){
+
+                printf("\nCLIENT %d\n",i);
+                ajouterClient(c+i);
+                do {
+
+                    printf("Donner le code de voiture a louer pour le client %s %s ",(c+i)->nom, (c+i)->prenom);
+                    scanf("%d",&code);
+
+                    Vloue = rechercherVoitureParCode(code,v,nbVoitures);
+                if (Vloue.code==0){
+                    printf("Voiture introuvable !!\n");
+                }
+            } while (Vloue.code==0);
+
+            affecterClientToVoiture(c+i,Vloue);
+        }
+}
+
+void remplirTabResultat (RESULTAT ** tableauResultats,int nbResultats, CLIENT *c, int nbClients,int capaciteResultats){
+        int j;
+        RESULTAT *nouveauResultat;
+        for (j=0; j<nbClients; j++){
+            nouveauResultat = (RESULTAT *)malloc(sizeof(RESULTAT));
+            if (nouveauResultat == NULL) {
+                printf("Erreur lors de l'allocation d'un nouveau résultat\n");
+                exit(-2);
+            }
+            strcpy(nouveauResultat->nomClient, c[j].nom);
+            strcpy(nouveauResultat->prenomClient, c[j].prenom);
+            nouveauResultat->nbLocations = c[j].nombreLocations;
+            int prix=0, v;
+            printf("\n****************Nombre locations client %d = %d\n",j,c[j].nombreLocations);
+            // Vérifier si le tableau a besoin d'être redimensionné
+            if (nbResultats >= capaciteResultats) {
+                capaciteResultats *= 2; // Double la capacité du tableau
+                tableauResultats = (RESULTAT **)realloc(tableauResultats, capaciteResultats * sizeof(RESULTAT *));
+                if (tableauResultats == NULL) {
+                    printf("Erreur lors du redimensionnement du tableau de résultats\n");
+                    exit(-3);
+                }
+            }
+
+            // Ajouter l'adresse du nouveau résultat dans le tableau
+            tableauResultats[nbResultats] = nouveauResultat;
+            nbResultats++; // Augmenter le nombre de résultats
+        }
+}
+
+void maxNbLocations(RESULTAT** tableauResultats, int nbClients){
+    int indexMax = 0;
+            int nbMax = tableauResultats[0]->nbLocations;
+            printf("\n----------------------\n");
+            int i;
+            for (i = 1; i < nbClients; i++) {
+                if (tableauResultats[i]->nbLocations > nbMax) {
+                    nbMax = tableauResultats[i]->nbLocations;
+                    indexMax = i;
+                }
+            }
+
+            // Afficher les détails du client ayant le montant le plus élevé à payer
+            printf("Client avec le nombre de location le plus élevé à payer :\n");
+            printf("Nom et prénom du client : %s %s\n", tableauResultats[indexMax]->nomClient, tableauResultats[indexMax]->prenomClient);
+            printf("Nombre de location : %d\n\n", tableauResultats[indexMax]->nbLocations);
+}

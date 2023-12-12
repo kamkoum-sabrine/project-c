@@ -52,12 +52,19 @@ void ajouterClient (CLIENT *); ///Une procédure qui crée un nouveau client
 void afficherClient (CLIENT ); ///Une procédure qui affiche les informations d'une voiture
 void affecterClientToVoiture(CLIENT *, VOITURE);
 VOITURE rechercherVoitureParCode(int, VOITURE [], int);
-void miseAJour (VOITURE *,int, int , VOITURE);
+void miseAJour (VOITURE *,int, int );
 void supprimerVoiture(VOITURE *, int  , int);
 void ecrireFichierStructure(const char*, VOITURE);
 void ecrireFichierIndex(const char* , int );
 void afficherFichierStructure(const char* );
 void modifierStructure(const char* , int , VOITURE);
-
-
+void afficherTabVoiture(VOITURE * , int );
+void affichetabclient(CLIENT*,int);
+CLIENT* allocationclient(int);
+VOITURE* allocationvoiture(int );
+void remplirTabVoiture (VOITURE *, int);
+void reallocVoiture(VOITURE *, int, int);
+void remplirTabClient (CLIENT *, int, VOITURE *, int);
+void remplirTabResultat (RESULTAT **,int , CLIENT *, int, int);
+void maxNbLocations(RESULTAT**, int );
 #endif // BIB_H_INCLUDED
