@@ -9,7 +9,6 @@ void main()
     RESULTAT ** tableauResultats;
     int nbResultats = 0; // Nombre initial d'éléments dans le tableau
     int capaciteResultats = 5; // Capacité initiale du tableau
-
     tableauResultats = (RESULTAT **)malloc(capaciteResultats * sizeof(RESULTAT *));
     printf("\nBienvenue dans votre Agence de voiture\n");
     printf("Combien de voiture voulez vous ajouter ? ");
@@ -18,7 +17,11 @@ void main()
     printf("\n*************Ajout des voitures*************\n");
     for(i=0;i<nbVoitures;i++){
         printf("\nVOITURE %d\n",i);
+        // Voiture à écrire dans les fichiers
         ajouterVoiture(stockvoiture+i);
+        ecrireFichierStructure("fichier_structure.dat", *(stockvoiture+i));
+        ecrireFichierIndex("fichier_index.dat", i); // Stocker la position de la voiture
+       /// ecrireFichierStructure("fichier_structure.dat", *(stockvoiture));
     }
 
 
@@ -67,7 +70,9 @@ void main()
             printf("\n************Affichage des voitures****************\n");
              for(i=0;i<nbVoitures;i++){
                 printf("\nVOITURE %d\n",i);
-                afficherVoiture(*(stockvoiture+i));
+                ///afficherVoiture(*(stockvoiture+i));
+                printf("Contenu du fichier structure :\n");
+                afficherFichierStructure("fichier_structure.dat");
              } break;
         case 3:
 
@@ -111,14 +116,15 @@ void main()
             scanf(" %s", &Voit.modele);
 
             printf("Saisissez la marque de la nouvelle voiture : ");
-             scanf(" %s", &Voit.marque);
+            scanf(" %s", &Voit.marque);
 
-           printf("Saisissez l'année de fabrication de la nouvelle voiture : ");
-           scanf("%d", &Voit.annee);
+            printf("Saisissez l'année de fabrication de la nouvelle voiture : ");
+            scanf("%d", &Voit.annee);
 
-          printf("Saisissez le prix de location de la nouvelle voiture : ");
-          scanf("%f", &Voit.prixLocation);
+            printf("Saisissez le prix de location de la nouvelle voiture : ");
+            scanf("%f", &Voit.prixLocation);
             miseAJour(stockvoiture, nbVoitures, codeVoiture, Voit);
+
           break;
           case 7:
              // Déclaration d'un tableau dynamique d'adresses de RESULTAT

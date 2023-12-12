@@ -20,7 +20,6 @@ struct Voiture {
     char marque[50];
     int annee;
     float prixLocation;
-    ///LOCATION * locations[100];
 };
 
 
@@ -55,10 +54,10 @@ void affecterClientToVoiture(CLIENT *, VOITURE);
 VOITURE rechercherVoitureParCode(int, VOITURE [], int);
 void miseAJour (VOITURE *,int, int , VOITURE);
 void supprimerVoiture(VOITURE *, int  , int);
-
-
-
-
+void ecrireFichierStructure(const char*, VOITURE);
+void ecrireFichierIndex(const char* , int );
+void afficherFichierStructure(const char* );
+void modifierStructure(const char* , int , VOITURE);
 
 
 #endif // BIB_H_INCLUDED

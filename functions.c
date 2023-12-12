@@ -121,6 +121,10 @@ void miseAJour(VOITURE *tabVoitures, int nbVoitures, int codeVoiture, VOITURE no
     for (i = 0; i < nbVoitures; ++i) {
         if (tabVoitures[i].code == codeVoiture) {
             tabVoitures[i] = nouvelleVoiture;
+            int positionAModifier = i; // Position à modifier
+            modifierStructure("fichier_structure.dat", positionAModifier, nouvelleVoiture);
+
+         ///   modifierStructure("fichier_structure.dat", positionAModifier, nouvelleVoiture);
             printf("La mise à jour de la voiture avec le code %d a été effectuée avec succès.\n", codeVoiture);
             return;
         }
@@ -147,3 +151,61 @@ void supprimerVoiture(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
         printf("Aucune voiture avec le code %d n'a été trouvée. La suppression a échoué.\n", codeVoiture);
     }
 }
+
+// Fonction pour écrire une structure Voiture dans un fichier structure
+void ecrireFichierStructure(const char* nomFichier, VOITURE voiture) {
+    FILE* fichier = fopen(nomFichier, "ab"); // Ouverture du fichier en mode ajout binaire
+
+    if (fichier != NULL) {
+        fwrite(&voiture, sizeof(VOITURE), 1, fichier); // Écriture de la structure dans le fichier
+        fclose(fichier); // Fermeture du fichier
+    } else {
+        printf("Impossible d'ouvrir le fichier %s\n", nomFichier);
+    }
+}
+
+// Fonction pour écrire une structure Voiture dans un fichier index
+void ecrireFichierIndex(const char* nomFichier, int position) {
+    FILE* fichier = fopen(nomFichier, "ab"); // Ouverture du fichier en mode ajout binaire
+
+    if (fichier != NULL) {
+        fwrite(&position, sizeof(int), 1, fichier); // Écriture de la position dans le fichier
+        fclose(fichier); // Fermeture du fichier
+    } else {
+        printf("Impossible d'ouvrir le fichier %s\n", nomFichier);
+    }
+}
+
+// Fonction pour afficher les structures Voiture à partir d'un fichier structure
+void afficherFichierStructure(const char* nomFichier) {
+    FILE* fichier = fopen(nomFichier, "rb"); // Ouverture du fichier en mode lecture binaire
+
+    if (fichier != NULL) {
+        VOITURE voiture;
+
+        while (fread(&voiture, sizeof(VOITURE), 1, fichier)) {
+            printf("Code: %d, Modele: %s, Marque: %s, Annee: %d, Prix de location: %.2f\n",
+                   voiture.code, voiture.modele, voiture.marque, voiture.annee, voiture.prixLocation);
+        }
+
+        fclose(fichier); // Fermeture du fichier
+    } else {
+        printf("Impossible d'ouvrir le fichier %s\n", nomFichier);
+    }
+}
+
+void modifierStructure(const char* nomFichierStructure, int position, VOITURE nouvelleVoiture) {
+    FILE* fichierStructure = fopen(nomFichierStructure, "rb+"); // Ouverture du fichier en mode lecture et écriture binaire
+
+    if (fichierStructure != NULL) {
+        fseek(fichierStructure, position * sizeof(VOITURE), SEEK_SET); // Déplacement à la position spécifiée
+
+        fwrite(&nouvelleVoiture, sizeof(VOITURE), 1, fichierStructure); // Écriture de la nouvelle structure
+
+        fclose(fichierStructure); // Fermeture du fichier
+    } else {
+        printf("Impossible d'ouvrir le fichier %s\n", nomFichierStructure);
+    }
+}
+
+
