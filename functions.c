@@ -59,7 +59,10 @@ void affecterClientToVoiture(CLIENT * c,VOITURE v){
     printf("DateLocation debut = %d-%d-%d\n",nouvelleLocation.dateDebut.jour,nouvelleLocation.dateDebut.mois, nouvelleLocation.dateDebut.annee );
     c->locations[c->nombreLocations] = &nouvelleLocation;
     printf("DateLocation fin = %d-%d-%d\n",c->locations[c->nombreLocations]->dateFin.jour,c->locations[c->nombreLocations]->dateFin.mois, c->locations[c->nombreLocations]->dateFin.annee );
+     printf("\n*****************Code voituree %d\n", c->locations[c->nombreLocations]->voitureLouee->code);
     c->nombreLocations++;
+
+
 }
 
 VOITURE rechercherVoitureParCode(int code, VOITURE v[], int nbVoiture){
@@ -99,7 +102,7 @@ void afficherClient(CLIENT  c) {
     printf("Le telephone du client : %d\n", c.telephone);
     printf("Le nombre de ces locations: %d\n",c.nombreLocations);
     VOITURE voiture;
-   /** for (i = 0; i < c.nombreLocations; i++) {
+   for (i = 0; i < c.nombreLocations; i++) {
         printf("Location num %d\n", i);
         voiture = *(c.locations[i]->voitureLouee);
         printf("Informations sur la voiture louée par le client :\n");
@@ -111,7 +114,7 @@ void afficherClient(CLIENT  c) {
         printf("La voiture :");
         printf("%d\n",c.locations[i]->voitureLouee->code);
 
-    }**/
+    }
 }
 void miseAJour(VOITURE *tabVoitures, int nbVoitures, int codeVoiture, VOITURE nouvelleVoiture) {
     int i;

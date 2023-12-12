@@ -43,8 +43,9 @@ struct Client {
 };
 
 struct Resultat {
-    int cinClient;
-    float montantAPayer;
+    char nomClient[50];
+    char prenomClient[50];
+    int nbLocations;
 };
 void ajouterVoiture (VOITURE *); ///Une procédure qui crée une nouvelle voiture
 void afficherVoiture (VOITURE); ///Une procédure qui affiche les informations d'une voiture
