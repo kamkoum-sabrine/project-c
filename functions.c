@@ -23,7 +23,7 @@ void afficherVoiture(VOITURE v){
     printf("Le prix de la voiture: %.2f\n",v.prixLocation);
 }
 
-void ajouterClient (CLIENT * c){
+void ajouterClient (CLIENT * c,VOITURE *v,int nbVoitures){
 
     printf("Saisir le CIN du client ");
     scanf("%d", &c->cin);
@@ -33,34 +33,66 @@ void ajouterClient (CLIENT * c){
     scanf("%s", &c->prenom);
     printf("Saisir le telephone du client ");
     scanf("%d", &c->telephone);
-    c->nombreLocations=0;
+    printf("Saisir le nombre de locations de ce client ");
+    scanf("%d", &c->nombreLocations);
+    louerVoiture(c,v,nbVoitures);
+   /// c->nombreLocations=0;
 }
 
-void affecterClientToVoiture(CLIENT * c,VOITURE v){
+void louerVoiture(CLIENT * c, VOITURE *v, int nbVoitures){
+    int i,code;
     LOCATION nouvelleLocation;
     DATE dateDeb;
     DATE dateFin;
-    nouvelleLocation.voitureLouee = &v;
-    printf("\nJour: ");
-    scanf("%d",&dateDeb.jour);
-    printf("\nMois: ");
-    scanf("%d",&dateDeb.mois);
-    printf("\nAnnée: ");
-    scanf("%d",&dateDeb.annee);
-    printf("Donner la date fin de location de la voiture ");
-    printf("\nJour: ");
-    scanf("%d",&dateFin.jour);
-    printf("\nMois: ");
-    scanf("%d",&dateFin.mois);
-    printf("\nAnnée: ");
-    scanf("%d",&dateFin.annee);
-    nouvelleLocation.dateDebut = dateDeb;
-    nouvelleLocation.dateFin = dateFin;
-    printf("DateLocation debut = %d-%d-%d\n",nouvelleLocation.dateDebut.jour,nouvelleLocation.dateDebut.mois, nouvelleLocation.dateDebut.annee );
-    c->locations[c->nombreLocations] = &nouvelleLocation;
-    printf("DateLocation fin = %d-%d-%d\n",c->locations[c->nombreLocations]->dateFin.jour,c->locations[c->nombreLocations]->dateFin.mois, c->locations[c->nombreLocations]->dateFin.annee );
-     printf("\n*****************Code voituree %d\n", c->locations[c->nombreLocations]->voitureLouee->code);
-    c->nombreLocations++;
+    VOITURE Vloue;
+    for (i=0;i<c->nombreLocations;i++){
+        printf("\nLOCATION %d\n",i+1);
+        do {
+
+            printf("Donner le code de voiture a louer pour le client %s %s ",(c+i)->nom, (c+i)->prenom);
+            scanf("%d",&code);
+
+            Vloue = rechercherVoitureParCode(code,v,nbVoitures);
+        if (Vloue.code==0){
+            printf("Voiture introuvable !!\n");
+        }
+        } while (Vloue.code==0);
+
+    ///affecterClientToVoiture(c+i,Vloue);
+        nouvelleLocation.voitureLouee = &Vloue;
+        printf("Le code de location ");
+        int j;
+        unsigned long long nombreAleatoire = 0;
+        for (j = 0; j < 9; ++j) {
+            nombreAleatoire = nombreAleatoire * 10ULL + (rand() % 10);
+        }
+
+        printf("%llu\n",nombreAleatoire);
+        nouvelleLocation.code=nombreAleatoire;
+        ///scanf("%d",&nouvelleLocation.code);
+        printf("Donner la date debut de location de la voiture ");
+        printf("\nJour: ");
+        scanf("%d",&dateDeb.jour);
+        printf("\nMois: ");
+        scanf("%d",&dateDeb.mois);
+        printf("\nAnnée: ");
+        scanf("%d",&dateDeb.annee);
+        printf("Donner la date fin de location de la voiture ");
+        printf("\nJour: ");
+        scanf("%d",&dateFin.jour);
+        printf("\nMois: ");
+        scanf("%d",&dateFin.mois);
+        printf("\nAnnée: ");
+        scanf("%d",&dateFin.annee);
+        nouvelleLocation.dateDebut = dateDeb;
+        nouvelleLocation.dateFin = dateFin;
+        printf("DateLocation debut = %d-%d-%d\n",nouvelleLocation.dateDebut.jour,nouvelleLocation.dateDebut.mois, nouvelleLocation.dateDebut.annee );
+        c->locations[c->nombreLocations] = &nouvelleLocation;
+        printf("DateLocation fin = %d-%d-%d\n",c->locations[c->nombreLocations]->dateFin.jour,c->locations[c->nombreLocations]->dateFin.mois, c->locations[c->nombreLocations]->dateFin.annee );
+         printf("\n*****************Code voituree %d\n", c->locations[c->nombreLocations]->voitureLouee->code);
+       /// c->nombreLocations++;
+    }
+
 
 
 }
@@ -81,18 +113,6 @@ VOITURE rechercherVoitureParCode(int code, VOITURE v[], int nbVoiture){
         return voitureParDefaut;
     }
 }
-/**void remplirTabVoiture (VOITURE *v, int nbVoitures){
-    int i;
-    v=(VOITURE*)malloc(nbVoitures*sizeof(VOITURE));
-    for(i=0;i<nbVoitures;i++)
-        ajouterVoiture(&v+i);
-}**/
-/**void afficherTabVoiture(VOITURE * v, int nbVoitures){
-    int i;
-     for(i=0;i<nbVoitures;i++)
-        afficherVoiture(v[i]);
-
-}**/
 
 void afficherClient(CLIENT  c) {
     int i;
@@ -101,9 +121,16 @@ void afficherClient(CLIENT  c) {
     printf("Le nom et prénom du client: %s %s\n", c.nom, c.prenom);
     printf("Le telephone du client : %d\n", c.telephone);
     printf("Le nombre de ces locations: %d\n",c.nombreLocations);
+    printf("Codes locations\n");
+    for(i=0;i<c.nombreLocations;i++){
+        printf("%d\t",c.locations[i]->code);
+    }
+    printf("\n");
     VOITURE voiture;
-   /**for (i = 0; i < c.nombreLocations; i++) {
+   for (i = 0; i < c.nombreLocations; i++) {
         printf("Location num %d\n", i);
+        printf("Code location: %d\n",c.locations[i]->code);
+        /**printf("Date debut location: %d/%d/%d\n",c.locations[i]->dateDebut.jour,c.locations[i]->dateDebut.mois,c.locations[i]->dateDebut.annee);
         voiture = *(c.locations[i]->voitureLouee);
         printf("Informations sur la voiture louée par le client :\n");
         printf("Code : %d\n", voiture.code);
@@ -112,9 +139,9 @@ void afficherClient(CLIENT  c) {
         printf("Année : %d\n", voiture.annee);
         printf("Prix de location : %.2f\n", voiture.prixLocation);
         printf("La voiture :");
-        printf("%d\n",c.locations[i]->voitureLouee->code);
+        printf("%d\n",c.locations[i]->voitureLouee->code);**/
 
-    }**/
+    }
 }
 void miseAJour(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
     int i;
@@ -137,10 +164,9 @@ void miseAJour(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
     printf("Saisissez le prix de location de la nouvelle voiture : ");
     scanf("%f", &nouvelleVoiture.prixLocation);
     for (i = 0; i < nbVoitures; ++i) {
-        if (tabVoitures[i].code == codeVoiture) {
-            tabVoitures[i] = nouvelleVoiture;
+        if ((tabVoitures+i)->code == codeVoiture) {
+            *(tabVoitures+i) = nouvelleVoiture;
             int positionAModifier = i; // Position à modifier
-            modifierStructure("fichier_structure.dat", positionAModifier, nouvelleVoiture);
 
          ///   modifierStructure("fichier_structure.dat", positionAModifier, nouvelleVoiture);
             printf("La mise à jour de la voiture avec le code %d a été effectuée avec succès.\n", codeVoiture);
@@ -153,10 +179,14 @@ void supprimerVoiture(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
     int i,j;
     int voitureTrouvee = 0;
 
-    for (i = 0; i < nbVoitures; ++i) {
-        if (tabVoitures[i].code == codeVoiture) {
+    afficherTabVoiture(tabVoitures, nbVoitures);
+    for (i = 0; i < nbVoitures; i++) {
+        printf("\nCompteur %d\n",i);
+        printf("(tabVoitures+i)->code = %d\n",(tabVoitures+i)->code);
+        printf("codeVoiture = %d\n",codeVoiture);
+        if ((tabVoitures+i)->code == codeVoiture) {
              for ( j = i; j < (nbVoitures - 1); j++) {
-                tabVoitures[j] = tabVoitures[j + 1];
+                *(tabVoitures+j) = *(tabVoitures+j+ 1);
             }
 
             printf("La voiture avec le code %d a été supprimée avec succès.\n", codeVoiture);
@@ -170,67 +200,11 @@ void supprimerVoiture(VOITURE *tabVoitures, int nbVoitures, int codeVoiture) {
     }
 }
 
-// Fonction pour écrire une structure Voiture dans un fichier structure
-void ecrireFichierStructure(const char* nomFichier, VOITURE voiture) {
-    FILE* fichier = fopen(nomFichier, "ab"); // Ouverture du fichier en mode ajout binaire
-
-    if (fichier != NULL) {
-        fwrite(&voiture, sizeof(VOITURE), 1, fichier); // Écriture de la structure dans le fichier
-        fclose(fichier); // Fermeture du fichier
-    } else {
-        printf("Impossible d'ouvrir le fichier %s\n", nomFichier);
-    }
-}
-
-// Fonction pour écrire une structure Voiture dans un fichier index
-void ecrireFichierIndex(const char* nomFichier, int position) {
-    FILE* fichier = fopen(nomFichier, "ab"); // Ouverture du fichier en mode ajout binaire
-
-    if (fichier != NULL) {
-        fwrite(&position, sizeof(int), 1, fichier); // Écriture de la position dans le fichier
-        fclose(fichier); // Fermeture du fichier
-    } else {
-        printf("Impossible d'ouvrir le fichier %s\n", nomFichier);
-    }
-}
-
-// Fonction pour afficher les structures Voiture à partir d'un fichier structure
-void afficherFichierStructure(const char* nomFichier) {
-    FILE* fichier = fopen(nomFichier, "rb"); // Ouverture du fichier en mode lecture binaire
-
-    if (fichier != NULL) {
-        VOITURE voiture;
-
-        while (fread(&voiture, sizeof(VOITURE), 1, fichier)) {
-            printf("Code: %d, Modele: %s, Marque: %s, Annee: %d, Prix de location: %.2f\n",
-                   voiture.code, voiture.modele, voiture.marque, voiture.annee, voiture.prixLocation);
-        }
-
-        fclose(fichier); // Fermeture du fichier
-    } else {
-        printf("Impossible d'ouvrir le fichier %s\n", nomFichier);
-    }
-}
-
-void modifierStructure(const char* nomFichierStructure, int position, VOITURE nouvelleVoiture) {
-    FILE* fichierStructure = fopen(nomFichierStructure, "rb+"); // Ouverture du fichier en mode lecture et écriture binaire
-
-    if (fichierStructure != NULL) {
-        fseek(fichierStructure, position * sizeof(VOITURE), SEEK_SET); // Déplacement à la position spécifiée
-
-        fwrite(&nouvelleVoiture, sizeof(VOITURE), 1, fichierStructure); // Écriture de la nouvelle structure
-
-        fclose(fichierStructure); // Fermeture du fichier
-    } else {
-        printf("Impossible d'ouvrir le fichier %s\n", nomFichierStructure);
-    }
-}
-
 void affichetabclient(CLIENT*c,int nbclients){
     int i;
     for(i=0;i<nbclients;i++){
-        printf("\n CLIENT %d",i);
-        afficherClient(c[i]);
+        printf("\n CLIENT %d",i+1);
+        afficherClient(*(c+i));
     }
 }
 
@@ -253,43 +227,34 @@ void afficherTabVoiture(VOITURE * v, int nbVoitures){
     int i;
      for(i=0;i<nbVoitures;i++){
         printf("\nVOITURE %d\n",i);
-        ///afficherVoiture(*(stockvoiture+i));
-        printf("Contenu du fichier structure :\n");
-        afficherFichierStructure("fichier_structure.dat");
+        afficherVoiture(*(v+i));
      }
 }
 
 void remplirTabVoiture (VOITURE *v, int nbVoitures){
     int i;
     for(i=0;i<nbVoitures;i++){
-        printf("\nVOITURE %d\n",i);
-        // Voiture à écrire dans les fichiers
-        ajouterVoiture(v);
-        ecrireFichierStructure("fichier_structure.dat", *v);
-        ecrireFichierIndex("fichier_index.dat", i); // Stocker la position de la voiture
+        printf("\nVOITURE %d\n",i+1);
+        ajouterVoiture(v+i);
     }
-
-    /**v=(VOITURE*)malloc(nbVoitures*sizeof(VOITURE));**/
-     /**  for(i=0;i<nbVoitures;i++){
-           printf("\n VOITURE %d \n ",i);
-           ajouterVoiture(&v+i);
-       }**/
 }
 
 void reallocVoiture(VOITURE *v, int nbVoitures, int nbNouveauxVoitures){
 
+    ///Redimentionner le tableau voitures v
     v = (VOITURE *)realloc(v, (nbVoitures + nbNouveauxVoitures) * sizeof(VOITURE));
     if (v == NULL) {
+        ///Si la redimention a été échouée
         printf("Erreur lors du redimensionnement du tableau stockvoiture\n");
     } else {
+        ///Modifier de la taille du tableau voitures v intiale
         nbVoitures += nbNouveauxVoitures;
         int i;
+        ///Ajouter de nouvelles voitures
         for (i = nbVoitures - nbNouveauxVoitures; i < nbVoitures; i++) {
             printf("\nVOITURE %d\n", i);
+            ///Ajouter dans le tableau v
             ajouterVoiture(v + i);
-
-            ecrireFichierStructure("fichier_structure.dat", *(v + i));
-            ecrireFichierIndex("fichier_index.dat", i); // Stocker la position de la voiture
         }
     }
 }
@@ -300,20 +265,8 @@ void remplirTabClient(CLIENT * c, int nbClients, VOITURE *v, int nbVoitures){
             VOITURE Vloue;
              for(i=0;i<nbClients;i++){
 
-                printf("\nCLIENT %d\n",i);
-                ajouterClient(c+i);
-                do {
-
-                    printf("Donner le code de voiture a louer pour le client %s %s ",(c+i)->nom, (c+i)->prenom);
-                    scanf("%d",&code);
-
-                    Vloue = rechercherVoitureParCode(code,v,nbVoitures);
-                if (Vloue.code==0){
-                    printf("Voiture introuvable !!\n");
-                }
-            } while (Vloue.code==0);
-
-            affecterClientToVoiture(c+i,Vloue);
+                printf("\nCLIENT \n");
+                ajouterClient(c+i,v,nbVoitures);
         }
 }
 
@@ -326,11 +279,11 @@ void remplirTabResultat (RESULTAT ** tableauResultats,int nbResultats, CLIENT *c
                 printf("Erreur lors de l'allocation d'un nouveau résultat\n");
                 exit(-2);
             }
-            strcpy(nouveauResultat->nomClient, c[j].nom);
-            strcpy(nouveauResultat->prenomClient, c[j].prenom);
-            nouveauResultat->nbLocations = c[j].nombreLocations;
+            strcpy(nouveauResultat->nomClient, (c+j)->nom);
+            strcpy(nouveauResultat->prenomClient, (c+j)->prenom);
+            nouveauResultat->nbLocations = (c+j)->nombreLocations;
             int prix=0, v;
-            printf("\n****************Nombre locations client %d = %d\n",j,c[j].nombreLocations);
+            printf("\n****************Nombre locations client %d = %d\n",j,(c+j)->nombreLocations);
             // Vérifier si le tableau a besoin d'être redimensionné
             if (nbResultats >= capaciteResultats) {
                 capaciteResultats *= 2; // Double la capacité du tableau
@@ -342,25 +295,115 @@ void remplirTabResultat (RESULTAT ** tableauResultats,int nbResultats, CLIENT *c
             }
 
             // Ajouter l'adresse du nouveau résultat dans le tableau
-            tableauResultats[nbResultats] = nouveauResultat;
+            *(tableauResultats+nbResultats) = nouveauResultat;
             nbResultats++; // Augmenter le nombre de résultats
         }
 }
 
 void maxNbLocations(RESULTAT** tableauResultats, int nbClients){
     int indexMax = 0;
-            int nbMax = tableauResultats[0]->nbLocations;
+            int nbMax = (*tableauResultats+0)->nbLocations;
             printf("\n----------------------\n");
             int i;
             for (i = 1; i < nbClients; i++) {
-                if (tableauResultats[i]->nbLocations > nbMax) {
-                    nbMax = tableauResultats[i]->nbLocations;
+                if ((*tableauResultats+i)->nbLocations > nbMax) {
+                    nbMax = (*tableauResultats+i)->nbLocations;
                     indexMax = i;
                 }
             }
 
             // Afficher les détails du client ayant le montant le plus élevé à payer
             printf("Client avec le nombre de location le plus élevé à payer :\n");
-            printf("Nom et prénom du client : %s %s\n", tableauResultats[indexMax]->nomClient, tableauResultats[indexMax]->prenomClient);
-            printf("Nombre de location : %d\n\n", tableauResultats[indexMax]->nbLocations);
+            printf("Nom et prénom du client : %s %s\n", (*tableauResultats+indexMax)->nomClient, tableauResultats[indexMax]->prenomClient);
+            printf("Nombre de location : %d\n\n", (*tableauResultats+indexMax)->nbLocations);
 }
+
+void creerFichierClientsIndex(FILE**fp,FILE**fi)
+{
+    *fp=fopen("Clients","wb+");
+    if( !*fp) exit(-1);
+    *fi=fopen("ClientsIndex","wb+");
+    if ( !*fi) exit(-1);
+}
+
+
+void remplirFichierClientsIndex(FILE*fp, FILE*fi, VOITURE*v,int nbVoitures,CLIENT * c, int nbClients)
+{
+    int x;
+    int i;
+    for (i=0;i<nbClients;i++){
+        ajouterClient(c+i,v,nbVoitures);
+        x=ftell(fp);
+        fwrite(&x, sizeof(int),1,fi);
+        ecrireUnClientDansFichier(fp,*(c+i));
+    }
+
+}
+
+void afficherFichierClientsIndex(FILE*fp,FILE*fi,int nbClients)
+{
+    CLIENT c;
+    int x,i;
+    rewind(fi);rewind(fp);
+    printf("\nAffichage Fichier index\n");
+
+     while (fread(&x, sizeof(int), 1, fi) == 1) {
+        fseek(fp, x, SEEK_SET); // Se positionner à l'offset x dans le fichier clients
+
+        c = lireUnClientDuFichier(fp);
+        afficherClient(c);
+    }
+
+}
+
+void ecrireUnClientDansFichier(FILE*fp,CLIENT c)
+{
+     // Écriture des informations du client dans le fichier
+    fwrite(&c.cin, sizeof(int), 1, fp);
+    fwrite(c.nom, sizeof(char), 50, fp);
+    fwrite(c.prenom, sizeof(char), 50, fp);
+    fwrite(&c.telephone, sizeof(int), 1, fp);
+    fwrite(&c.nombreLocations, sizeof(int), 1, fp);
+    //fwrite(c.locations, sizeof(LOCATION), c.nombreLocations, fp);
+
+    // Écriture des informations de chaque location
+      int i;
+     for ( i = 0; i < c.nombreLocations; ++i) {
+        fwrite(&c.locations[i]->code, sizeof(int), 1, fp);
+    }
+}
+
+// Fonction pour lire les données d'un client depuis un fichier
+CLIENT lireUnClientDuFichier(FILE *fp) {
+    CLIENT c;
+    fread(&c.cin, sizeof(int), 1, fp);
+    fread(c.nom, sizeof(char), 50, fp);
+    fread(c.prenom, sizeof(char), 50, fp);
+    fread(&c.telephone, sizeof(int), 1, fp);
+    fread(&c.nombreLocations, sizeof(int), 1, fp);
+
+    // Allocation de mémoire pour les locations
+  ///  c.locations = (LOCATION **)malloc(c.nombreLocations * sizeof(LOCATION** ));
+    if (c.locations == NULL) {
+        perror("Allocation de mémoire a échoué");
+        exit(-3);
+    }
+    int i ;
+    for (i= 0; i < c.nombreLocations; ++i) {
+        c.locations[i] = (LOCATION *)malloc(sizeof(LOCATION));
+        if (c.locations[i] == NULL) {
+            perror("Allocation de mémoire a échoué");
+           /// libererMemoireLocations(&c);
+            exit(-3);
+        }
+
+        fread(&c.locations[i]->code, sizeof(int), 1, fp);
+       /// fread(&c.locations[i]->dateFin, sizeof(DATE), 1, fp);
+    }
+
+    return c;
+}
+
+
+
+
